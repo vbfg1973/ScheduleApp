@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +35,8 @@ namespace Scheduler.Api
             services.AddDbContext<SchedulerContext>(options =>
                 options.UseSqlServer(Configuration["Data:SchedulerConnection:ConnectionString"],
                     b => b.MigrationsAssembly("Scheduler.Api")));
+
+            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
 
             // Repositories
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
