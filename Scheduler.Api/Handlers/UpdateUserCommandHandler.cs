@@ -19,7 +19,7 @@ namespace Scheduler.Api.Handlers
 
         public Task<User> Handle(UpdateUserCommand update, CancellationToken cancellationToken)
         {
-            var user = _userRepository.GetSingle(x => x.Id == update.Id);
+            var user = _userRepository.GetSingle(update.Id);
 
             if (user == null)
             {

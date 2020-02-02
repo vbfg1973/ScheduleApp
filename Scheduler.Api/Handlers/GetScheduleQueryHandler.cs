@@ -18,7 +18,7 @@ namespace Scheduler.Api.Handlers
 
         public Task<Schedule> Handle(GetScheduleQuery request, CancellationToken cancellationToken)
         {
-            var schedule = _scheduleRepository.GetSingle(u => u.Id == request.Id);
+            var schedule = _scheduleRepository.GetSingle(request.Id);
 
             if (schedule == null)
             {

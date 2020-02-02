@@ -19,7 +19,7 @@ namespace Scheduler.Api.Handlers
 
         public Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _userRepository.GetSingle(x => x.Id == request.Id);
+            var user = _userRepository.GetSingle(request.Id);
 
             if (user == null)
             {
