@@ -26,16 +26,16 @@ namespace Scheduler.Api.Handlers
                 throw new ArgumentNullException();
             }
 
-            schedule.Title = request.ScheduleDto.Title;
-            schedule.Description = request.ScheduleDto.Description;
-            schedule.TimeStart = request.ScheduleDto.TimeStart;
-            schedule.TimeEnd = request.ScheduleDto.TimeEnd;
-            schedule.Location = request.ScheduleDto.Location;
-            schedule.Type = request.ScheduleDto.Type;
-            schedule.Status = request.ScheduleDto.Status;
-            schedule.DateCreated = request.ScheduleDto.DateCreated;
-            schedule.DateUpdated = request.ScheduleDto.DateUpdated;
-            schedule.CreatorId = request.ScheduleDto.CreatorId;
+            //schedule.Title = request.ScheduleDto.Title;
+            //schedule.Description = request.ScheduleDto.Description;
+            //schedule.TimeStart = request.ScheduleDto.TimeStart;
+            //schedule.TimeEnd = request.ScheduleDto.TimeEnd;
+            //schedule.Location = request.ScheduleDto.Location;
+            //schedule.Type = request.ScheduleDto.Type;
+            //schedule.Status = request.ScheduleDto.Status;
+            //schedule.DateCreated = request.ScheduleDto.DateCreated;
+            //schedule.DateUpdated = request.ScheduleDto.DateUpdated;
+            //schedule.CreatorId = request.ScheduleDto.CreatorId;
 
             _scheduleRepository.Update(schedule);
             _scheduleRepository.Commit();

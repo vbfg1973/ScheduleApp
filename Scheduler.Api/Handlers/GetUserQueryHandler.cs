@@ -5,18 +5,23 @@ using Scheduler.Data.Abstract;
 using Scheduler.Model;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using Scheduler.Api.ViewModels;
 
 namespace Scheduler.Api.Handlers
 {
-    public class GetUserQueryHandler : IRequestHandler<GetUserQuery, User>
+    public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserViewModel>
     {
         private IUserRepository _userRepository;
-        public GetUserQueryHandler(IUserRepository userRepository)
+        private IMapper _mapper;
+
+        public GetUserQueryHandler(IUserRepository userRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _userRepository = userRepository;
         }
 
-        public Task<User> Handle(GetUserQuery request, CancellationToken cancellationToken)
+        public Task<UserViewModel> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             var user = _userRepository.GetSingle(request.Id);
 
@@ -25,7 +30,7 @@ namespace Scheduler.Api.Handlers
                 throw new ArgumentNullException();
             }
 
-            return Task.FromResult(user);
+            return Task.FromResult(_mapper.Map<User, UserViewModel>(user));
         }
     }
 }

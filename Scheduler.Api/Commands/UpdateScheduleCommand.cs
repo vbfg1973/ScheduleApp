@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Scheduler.Api.Dto;
+using Scheduler.Api.ViewModels;
 using Scheduler.Model;
 
 namespace Scheduler.Api.Commands
@@ -7,9 +7,9 @@ namespace Scheduler.Api.Commands
     public class UpdateScheduleCommand : IRequest<Schedule>
     {
         public int Id { get; }
-        public ScheduleDto ScheduleDto { get; }
+        public ScheduleViewModel ScheduleDto { get; }
 
-        public UpdateScheduleCommand(int id, ScheduleDto scheduleDto)
+        public UpdateScheduleCommand(int id, ScheduleViewModel scheduleDto)
         {
             Id = id;
             ScheduleDto = scheduleDto;

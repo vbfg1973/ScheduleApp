@@ -1,15 +1,15 @@
 ﻿using MediatR;
-using Scheduler.Api.Dto;
+using Scheduler.Api.ViewModels;
 using Scheduler.Model;
 
 namespace Scheduler.Api.Commands
 {
-    public class UpdateUserCommand : IRequest<User>
+    public class UpdateUserCommand : IRequest<UserViewModel>
     {
         public int Id { get; }
-        public UserDto UserDto { get; }
+        public User UserDto { get; }
 
-        public UpdateUserCommand(int id, UserDto userDto)
+        public UpdateUserCommand(int id, User userDto)
         {
             Id = id;
             UserDto = userDto;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,8 @@ namespace Scheduler.Api
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAttendeeRepository, AttendeeRepository>();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddCors();
             services.AddControllers()

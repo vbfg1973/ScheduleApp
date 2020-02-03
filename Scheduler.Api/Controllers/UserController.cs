@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Scheduler.Api.Commands;
-using Scheduler.Api.Dto;
+using Scheduler.Api.ViewModels;
 using Scheduler.Api.Queries;
 using Scheduler.Data.Abstract;
 using Scheduler.Model;
@@ -30,13 +30,13 @@ namespace Scheduler.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> Create(UserDto userDto)
+        public async Task<ActionResult<UserViewModel>> Create(User user)
         {
             try
             {
-                var user = await _mediator.Send(new CreateUserCommand(userDto));
+                var userViewModel = await _mediator.Send(new CreateUserCommand(user));
 
-                return user;
+                return userViewModel;
             }
 
             catch
@@ -46,12 +46,12 @@ namespace Scheduler.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<User>> Update(int id, UserDto userDto)
+        public async Task<IActionResult> Update(int id, User user)
         {
             try
             {
-                var user = await _mediator.Send(new UpdateUserCommand(id, userDto));
-                return user;
+                var userViewModel = await _mediator.Send(new UpdateUserCommand(id, user));
+                return NoContent();
             }
 
             catch (ArgumentNullException)
@@ -66,18 +66,17 @@ namespace Scheduler.Api.Controllers
             try
             {
                 await _mediator.Send(new DeleteUserCommand(id));
+                return NoContent();
             }
 
             catch (ArgumentNullException)
             {
                 return NotFound();
             }
-
-            return Ok();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserViewModel>> GetUser(int id)
         {
             try
             {
@@ -92,7 +91,7 @@ namespace Scheduler.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<UserViewModel>> GetAll()
         {
             var users = await _mediator.Send(new GetUsersQuery());
 

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Scheduler.Api.Commands;
-using Scheduler.Api.Dto;
+using Scheduler.Api.ViewModels;
 using Scheduler.Api.Queries;
 using Scheduler.Data.Abstract;
 using Scheduler.Model;
@@ -30,13 +30,13 @@ namespace Scheduler.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Schedule>> Create(ScheduleDto scheduleDto)
+        public async Task<ActionResult<ScheduleViewModel>> Create(Schedule schedule)
         {
             try
             {
-                var schedule = await _mediator.Send(new CreateScheduleCommand(scheduleDto));
+                var scheduleViewModel = await _mediator.Send(new CreateScheduleCommand(schedule));
 
-                return schedule;
+                return scheduleViewModel;
             }
 
             catch
@@ -46,7 +46,7 @@ namespace Scheduler.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Schedule>> Update(int id, ScheduleDto scheduleDto)
+        public async Task<ActionResult<Schedule>> Update(int id, ScheduleViewModel scheduleDto)
         {
             try
             {
@@ -77,12 +77,12 @@ namespace Scheduler.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Schedule>> GetSchedule(int id)
+        public async Task<ActionResult<ScheduleViewModel>> GetSchedule(int id)
         {
             try
             {
-                var schedule = await _mediator.Send(new GetScheduleQuery(id));
-                return schedule;
+                var scheduleViewModel = await _mediator.Send(new GetScheduleQuery(id));
+                return scheduleViewModel;
             }
 
             catch (ArgumentNullException)
@@ -92,11 +92,11 @@ namespace Scheduler.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Schedule>> GetAll()
+        public async Task<IEnumerable<ScheduleViewModel>> GetAll()
         {
-            var schedules = await _mediator.Send(new GetSchedulesQuery());
+            var scheduleViewModels = await _mediator.Send(new GetSchedulesQuery());
 
-            return schedules.ToArray();
+            return scheduleViewModels.ToArray();
         }
     }
 }

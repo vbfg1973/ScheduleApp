@@ -1,16 +1,16 @@
 ﻿using MediatR;
-using Scheduler.Api.Dto;
+using Scheduler.Api.ViewModels;
 using Scheduler.Model;
 
 namespace Scheduler.Api.Commands
 {
-    public class CreateScheduleCommand : IRequest<Schedule>
+    public class CreateScheduleCommand : IRequest<ScheduleViewModel>
     { 
-        public ScheduleDto ScheduleDto { get; }
+        public Schedule Schedule { get; }
 
-        public CreateScheduleCommand(ScheduleDto scheduleDto)
+        public CreateScheduleCommand(Schedule schedule)
         {
-            ScheduleDto = scheduleDto;
+            Schedule = schedule;
         }
     }
 }

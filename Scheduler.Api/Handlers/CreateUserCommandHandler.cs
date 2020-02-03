@@ -2,21 +2,25 @@
 using Scheduler.Api.Commands;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using Scheduler.Api.ViewModels;
 using Scheduler.Data.Abstract;
 using Scheduler.Model;
 
 namespace Scheduler.Api.Handlers
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, User>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserViewModel>
     {
         private IUserRepository _userRepository;
+        private IMapper _mapper;
 
-        public CreateUserCommandHandler(IUserRepository userRepository)
+        public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _userRepository = userRepository;
         }
 
-        public Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public Task<UserViewModel> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var user = new User()
             {
@@ -28,7 +32,7 @@ namespace Scheduler.Api.Handlers
             _userRepository.Add(user);
             _userRepository.Commit();
 
-            return Task.FromResult(user);
+            return Task.FromResult(_mapper.Map<User, UserViewModel>(user));
         }
     }
 }

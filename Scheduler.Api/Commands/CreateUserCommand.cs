@@ -1,14 +1,14 @@
 ﻿using MediatR;
-using Scheduler.Api.Dto;
+using Scheduler.Api.ViewModels;
 using Scheduler.Model;
 
 namespace Scheduler.Api.Commands
 {
-    public class CreateUserCommand : IRequest<User>
+    public class CreateUserCommand : IRequest<UserViewModel>
     { 
-        public UserDto UserDto { get; }
+        public User UserDto { get; }
 
-        public CreateUserCommand(UserDto userDto)
+        public CreateUserCommand(User userDto)
         {
             UserDto = userDto;
         }
