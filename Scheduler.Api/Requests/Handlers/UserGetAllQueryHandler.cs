@@ -9,12 +9,12 @@ using Scheduler.Data.Abstract;
 
 namespace Scheduler.Api.Requests.Handlers
 {
-    public class UserGetAllHandler : IRequestHandler<UserGetAllQuery, IEnumerable<UserViewModel>>
+    public class UserGetAllQueryHandler : IRequestHandler<UserGetAllQuery, IEnumerable<UserViewModel>>
     {
         private IUserRepository _userRepository;
         private IMapper _mapper;
 
-        public UserGetAllHandler(IUserRepository userRepository, IMapper mapper)
+        public UserGetAllQueryHandler(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;

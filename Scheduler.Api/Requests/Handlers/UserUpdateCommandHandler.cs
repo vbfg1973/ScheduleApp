@@ -11,12 +11,12 @@ using Scheduler.Model;
 
 namespace Scheduler.Api.Requests.Handlers
 {
-    public class UserUpdateHandler : IRequestHandler<UserUpdateCommand, UserViewModel>
+    public class UserUpdateCommandHandler : IRequestHandler<UserUpdateCommand, UserViewModel>
     {
         private IUserRepository _userRepository;
         private IMapper _mapper;
 
-        public UserUpdateHandler(IUserRepository userRepository, IMapper mapper)
+        public UserUpdateCommandHandler(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;

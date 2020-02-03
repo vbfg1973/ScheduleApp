@@ -9,12 +9,12 @@ using Scheduler.Data.Abstract;
 
 namespace Scheduler.Api.Requests.Handlers
 {
-    public class UserDeleteHandler : IRequestHandler<UserDeleteCommand>
+    public class UserDeleteCommandHandler : IRequestHandler<UserDeleteCommand>
     {
         private IUserRepository _userRepository;
         private IMapper _mapper;
 
-        public UserDeleteHandler(IUserRepository userRepository, IMapper mapper)
+        public UserDeleteCommandHandler(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;

@@ -10,12 +10,12 @@ using Scheduler.Model;
 
 namespace Scheduler.Api.Requests.Handlers
 {
-    public class UserCreateHandler : IRequestHandler<UserCreateCommand, UserViewModel>
+    public class UserCreateCommandHandler : IRequestHandler<UserCreateCommand, UserViewModel>
     {
         private IUserRepository _userRepository;
         private IMapper _mapper;
 
-        public UserCreateHandler(IUserRepository userRepository, IMapper mapper)
+        public UserCreateCommandHandler(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;
