@@ -32,4 +32,11 @@
     <ProjectReference Include="..\Scheduler.Model\Scheduler.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Requests\Commands\" />
+    <Folder Include="Requests\Handlers\" />
+    <Folder Include="Requests\" />
+    <Folder Include="Requests\Queries\" />
+  </ItemGroup>
+
 </Project>

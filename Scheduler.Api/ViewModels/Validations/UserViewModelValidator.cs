@@ -9,7 +9,7 @@ namespace Scheduler.Api.ViewModels.Validations
         {
             RuleFor(user => user.Name).NotEmpty().WithMessage("Name cannot be empty");
             RuleFor(user => user.Profession).NotEmpty().WithMessage("Profession cannot be empty");
-            RuleFor(user => user.Avatar).NotEmpty().WithMessage("Profession cannot be empty");
+            RuleFor(user => user.Avatar).NotEmpty().WithMessage("Avatar cannot be empty");
         }
     }
 }
