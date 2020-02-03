@@ -1,6 +1,15 @@
-﻿using MediatR;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Mime;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Scheduler.Api.Requests.Commands;
+using Scheduler.Api.Requests.Queries;
+using Scheduler.Api.ViewModels;
 using Scheduler.Data.Abstract;
 
 namespace Scheduler.Api.Controllers
@@ -16,6 +25,112 @@ namespace Scheduler.Api.Controllers
         {
             _mediator = mediator;
             _logger = logger;
+        }
+
+        [HttpPost(Name = "ScheduleCreate")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> ScheduleCreate(ScheduleViewModel scheduleViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var newScheduleViewModel = await _mediator.Send(new ScheduleCreateCommand(scheduleViewModel));
+                return Ok(newScheduleViewModel);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPut("{id}", Name = "ScheduleUpdate")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ScheduleUpdate(int id, ScheduleViewModel scheduleViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var newScheduleViewModel = await _mediator.Send(new ScheduleUpdateCommand(id, scheduleViewModel));
+                return Ok(newScheduleViewModel);
+            }
+
+            catch (KeyNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpDelete("{id}", Name = "ScheduleDelete")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ScheduleDelete(int id)
+        {
+            try
+            {
+                var scheduleViewModel = await _mediator.Send(new ScheduleDeleteCommand(id));
+                return NoContent();
+            }
+
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpGet(Name = "ScheduleGetAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ScheduleGetAll()
+        {
+            try
+            {
+                var schedules = await _mediator.Send(new ScheduleGetAllQuery());
+                return Ok(schedules);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet("{id}", Name = "ScheduleGetIndividual")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ScheduleGetIndividual(int id)
+        {
+            try
+            {
+                var scheduleViewModel = await _mediator.Send(new ScheduleGetIndividualQuery(id));
+                return Ok(scheduleViewModel);
+            }
+
+            catch (KeyNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
     }
 }

@@ -27,6 +27,76 @@ namespace Scheduler.Api.Controllers
             _logger = logger;
         }
 
+        [HttpPost(Name = "UserCreate")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> UserCreate(UserViewModel inputUserViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var userViewModel = await _mediator.Send(new UserCreateCommand(inputUserViewModel));
+                return new CreatedAtActionResult(nameof(UserGetIndividual),
+                    "User",
+                    new { id = userViewModel.Id },
+                    userViewModel);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPut("{id}", Name = "UserUpdate")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UserUpdate(int id, UserViewModel inputUserViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var userViewModel = await _mediator.Send(new UserUpdateCommand(id, inputUserViewModel));
+                return Ok(userViewModel);
+            }
+
+            catch (KeyNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpDelete("{id}", Name = "UserDelete")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UserDelete(int id)
+        {
+            try
+            {
+                var userViewModel = await _mediator.Send(new UserDeleteCommand(id));
+                return NoContent();
+            }
+
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
         [HttpGet(Name = "UserGetAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -63,76 +133,6 @@ namespace Scheduler.Api.Controllers
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
-            }
-        }
-
-        [HttpPost(Name = "UserCreate")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> UserCreate(UserViewModel inputUserViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                var userViewModel = await _mediator.Send(new UserCreateCommand(inputUserViewModel));
-                return new CreatedAtActionResult(nameof(UserGetIndividual), 
-                    "User", 
-                    new {id = userViewModel.Id},
-                    userViewModel);
-            }
-
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
-        [HttpPut("{id}", Name = "UserUpdate")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UserUpdate(int id, UserViewModel inputUserViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                var userViewModel = await _mediator.Send(new UserUpdateCommand(id, inputUserViewModel));
-                return Ok(userViewModel);
-            }
-
-            catch (KeyNotFoundException e)
-            {
-                return NotFound(e.Message);
-            }
-
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
-        [HttpDelete("{id}", Name = "UserDelete")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UserDelete(int id)
-        {
-            try
-            {
-                var userViewModel = await _mediator.Send(new UserDeleteCommand(id));
-                return NoContent();
-            }
-
-            catch (Exception e)
-            {
-                return NotFound(e.Message);
             }
         }
     }
