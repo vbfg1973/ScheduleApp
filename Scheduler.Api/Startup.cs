@@ -49,7 +49,7 @@ namespace Scheduler.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Schedules API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Scheduler Api", Version = "v1" });
             });
         }
 
