@@ -20,6 +20,7 @@ namespace Scheduler.Api.Requests.Handlers
         public ScheduleUpdateCommandHandler(IScheduleRepository scheduleRepository, IAttendeeRepository attendeeRepository, IMapper mapper)
         {
             _scheduleRepository = scheduleRepository;
+            _attendeeRepository = attendeeRepository;
             _mapper = mapper;
         }
 
