@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Scheduler.Api.Requests.Commands;
+using Scheduler.Api.Requests.Queries;
 using Scheduler.Api.ViewModels;
 using Scheduler.Data.Abstract;
 using Scheduler.Model;
@@ -21,6 +25,105 @@ namespace Scheduler.Api.Controllers
         {
             _mediator = mediator;
             _logger = logger;
+        }
+
+        [HttpGet(Name = "UserGetAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UserGetAll()
+        {
+            try
+            {
+                var users = await _mediator.Send(new UserGetAllQuery());
+                return Ok(users);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet("{id}", Name = "UserGetIndividual")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UserGetIndividual(int id)
+        {
+            try
+            {
+                var userViewModel = await _mediator.Send(new UserGetIndividualQuery(id));
+                return Ok(userViewModel);
+            }
+
+            catch (KeyNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPost(Name = "UserCreate")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> UserCreate(UserViewModel inputUserViewModel)
+        {
+            try
+            {
+                var userViewModel = await _mediator.Send(new UserCreateCommand(inputUserViewModel));
+                return new CreatedAtActionResult(nameof(UserGetIndividual), 
+                    "User", 
+                    new {id = userViewModel.Id},
+                    userViewModel);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPut("{id}", Name = "UserUpdate")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UserUpdate(int id, UserViewModel inputUserViewModel)
+        {
+            try
+            {
+                var userViewModel = await _mediator.Send(new UserUpdateCommand(id, inputUserViewModel));
+                return Ok(userViewModel);
+            }
+
+            catch (KeyNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpDelete("{id}", Name = "UserDelete")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UserDelete(int id)
+        {
+            try
+            {
+                var userViewModel = await _mediator.Send(new UserDeleteCommand(id));
+                return NoContent();
+            }
+
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
     }
 }
