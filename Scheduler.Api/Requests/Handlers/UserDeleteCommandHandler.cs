@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -12,10 +13,12 @@ namespace Scheduler.Api.Requests.Handlers
     public class UserDeleteCommandHandler : IRequestHandler<UserDeleteCommand>
     {
         private IUserRepository _userRepository;
+        private IAttendeeRepository _attendeeRepository;
         private IMapper _mapper;
 
-        public UserDeleteCommandHandler(IUserRepository userRepository, IMapper mapper)
+        public UserDeleteCommandHandler(IUserRepository userRepository, IAttendeeRepository attendeeRepository, IMapper mapper)
         {
+            _attendeeRepository = attendeeRepository;
             _userRepository = userRepository;
             _mapper = mapper;
         }
@@ -31,6 +34,8 @@ namespace Scheduler.Api.Requests.Handlers
 
             try
             {
+                _attendeeRepository.DeleteWhere(a => a.UserId == request.Id);
+
                 _userRepository.Delete(user);
                 _userRepository.Commit();
             }

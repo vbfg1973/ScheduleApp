@@ -11,10 +11,11 @@ namespace Scheduler.Api.Requests.Handlers
 {
     public class ScheduleDeleteCommandHandler : IRequestHandler<ScheduleDeleteCommand>
     {
+        private IAttendeeRepository _attendeeRepository;
         private IScheduleRepository _scheduleRepository;
         private IMapper _mapper;
 
-        public ScheduleDeleteCommandHandler(IScheduleRepository scheduleRepository, IMapper mapper)
+        public ScheduleDeleteCommandHandler(IScheduleRepository scheduleRepository, IAttendeeRepository attendeeRepository, IMapper mapper)
         {
             _scheduleRepository = scheduleRepository;
             _mapper = mapper;
@@ -31,6 +32,7 @@ namespace Scheduler.Api.Requests.Handlers
 
             try
             {
+                _attendeeRepository.DeleteWhere(a => a.ScheduleId == request.Id);
                 _scheduleRepository.Delete(schedule);
                 _scheduleRepository.Commit();
             }
