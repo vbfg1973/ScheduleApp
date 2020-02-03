@@ -17,6 +17,7 @@ namespace Scheduler.Api.Requests.Handlers
 
         public ScheduleDeleteCommandHandler(IScheduleRepository scheduleRepository, IAttendeeRepository attendeeRepository, IMapper mapper)
         {
+            _attendeeRepository = attendeeRepository;
             _scheduleRepository = scheduleRepository;
             _mapper = mapper;
         }
