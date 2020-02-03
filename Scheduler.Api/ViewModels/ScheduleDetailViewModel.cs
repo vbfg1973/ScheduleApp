@@ -18,7 +18,7 @@ namespace Scheduler.Api.ViewModels
         public DateTime DateUpdated { get; set; }
         public string Creator { get; set; }
         public int CreatorId { get; set; }
-        public ICollection<User> Attendees { get; set; }
+        public ICollection<UserViewModel> Attendees { get; set; }
         // Lookups
         public string[] Statuses { get; set; }
         public string[] Types { get; set; }

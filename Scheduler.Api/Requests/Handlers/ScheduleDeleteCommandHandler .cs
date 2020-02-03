@@ -26,7 +26,7 @@ namespace Scheduler.Api.Requests.Handlers
 
             if (schedule == null)
             {
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException($"Schedule {request.Id} not found");
             }
 
             try

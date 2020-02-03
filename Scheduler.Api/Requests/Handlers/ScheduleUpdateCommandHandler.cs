@@ -61,7 +61,7 @@ namespace Scheduler.Api.Requests.Handlers
                 }
             }
 
-            throw new KeyNotFoundException();
+            throw new KeyNotFoundException($"Schedule {request.Id} not found");
         }
     }
 }

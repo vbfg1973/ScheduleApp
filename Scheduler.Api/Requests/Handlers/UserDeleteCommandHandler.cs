@@ -26,7 +26,7 @@ namespace Scheduler.Api.Requests.Handlers
 
             if (user == null)
             {
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException($"User {request.Id} not found");
             }
 
             try

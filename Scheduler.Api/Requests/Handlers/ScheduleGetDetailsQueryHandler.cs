@@ -33,9 +33,9 @@ namespace Scheduler.Api.Requests.Handlers
 
                 foreach (var attendee in schedule.Attendees)
                 {
-                    var user = _userRepository.GetSingle(attendee.Id);
-                    //var userViewModel = _mapper.Map<User, UserViewModel>(user);
-                    scheduleDetailsViewModel.Attendees.Add(user);
+                    var user = _userRepository.GetSingle(attendee.UserId);
+                    var userViewModel = _mapper.Map<User, UserViewModel>(user);
+                    scheduleDetailsViewModel.Attendees.Add(userViewModel);
                 }
 
                 return Task.FromResult(scheduleDetailsViewModel);
@@ -43,7 +43,7 @@ namespace Scheduler.Api.Requests.Handlers
 
             else
             {
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException($"Schedule {request.Id} not found");
             }
         }
     }

@@ -30,7 +30,7 @@ namespace Scheduler.Api.Requests.Handlers
                 return Task.FromResult(_mapper.Map<Schedule, ScheduleViewModel>(schedule));
             }
 
-            throw new KeyNotFoundException();
+            throw new KeyNotFoundException($"Schedule {request.Id} not found");
         }
     }
 }
