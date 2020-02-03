@@ -135,5 +135,27 @@ namespace Scheduler.Api.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        [HttpGet("{id}/schedules", Name = "UserGetSchedules")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UserGetSchedules(int id)
+        {
+            try
+            {
+                var scheduleViewModels = await _mediator.Send(new UserGetScheduleQuery(id));
+                return Ok(scheduleViewModels);
+            }
+
+            catch (KeyNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }
