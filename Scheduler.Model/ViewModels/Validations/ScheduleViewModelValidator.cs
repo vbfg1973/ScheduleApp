@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
 using System;
-using Scheduler.Api.ViewModels;
 
-namespace Scheduler.Api.ViewModels.Validations
+namespace Scheduler.Model.ViewModels.Validations
 {
     public class ScheduleViewModelValidator : AbstractValidator<ScheduleViewModel>
     {

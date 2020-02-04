@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Scheduler.Model;
+using Scheduler.Model.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

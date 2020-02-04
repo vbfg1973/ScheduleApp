@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Mime;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -9,8 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Scheduler.Api.Requests.Commands;
 using Scheduler.Api.Requests.Queries;
-using Scheduler.Api.ViewModels;
-using Scheduler.Data.Abstract;
+using Scheduler.Model.ViewModels;
 
 namespace Scheduler.Api.Controllers
 {

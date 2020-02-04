@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Scheduler.Api.ViewModels;
+using Scheduler.Model.ViewModels;
 
 namespace Scheduler.Api.Requests.Queries
 {

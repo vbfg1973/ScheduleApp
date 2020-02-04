@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Scheduler.Model;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using Scheduler.Model.ViewModels.Validations;
 
-namespace Scheduler.Api.ViewModels
+namespace Scheduler.Model.ViewModels
 {
-    public class ScheduleDetailsViewModel
+    public class ScheduleViewModel : IValidatableObject
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -18,9 +20,13 @@ namespace Scheduler.Api.ViewModels
         public DateTime DateUpdated { get; set; }
         public string Creator { get; set; }
         public int CreatorId { get; set; }
-        public ICollection<UserViewModel> Attendees { get; set; }
-        // Lookups
-        public string[] Statuses { get; set; }
-        public string[] Types { get; set; }
+        public int[] Attendees { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var validator = new ScheduleViewModelValidator();
+            var result = validator.Validate(this);
+            return result.Errors.Select(item => new ValidationResult(item.ErrorMessage, new[] { item.PropertyName }));
+        }
     }
 }

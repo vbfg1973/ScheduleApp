@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Scheduler.Model;
 using System.Collections.Generic;
+using Scheduler.Model.ViewModels;
 
 namespace Scheduler.Api.ViewModels.Mappings
 {

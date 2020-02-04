@@ -8,9 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Scheduler.Api.Requests.Commands;
 using Scheduler.Api.Requests.Queries;
-using Scheduler.Api.ViewModels;
-using Scheduler.Data.Abstract;
-using Scheduler.Model;
+using Scheduler.Model.ViewModels;
 
 namespace Scheduler.Api.Controllers
 {

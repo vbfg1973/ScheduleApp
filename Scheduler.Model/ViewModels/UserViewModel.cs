@@ -1,9 +1,9 @@
-﻿using Scheduler.Api.ViewModels.Validations;
+﻿using Scheduler.Model.ViewModels.Validations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Scheduler.Api.ViewModels
+namespace Scheduler.Model.ViewModels
 {
     public class UserViewModel : IValidatableObject
     {

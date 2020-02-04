@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
-using Scheduler.Api.ViewModels;
+﻿using MediatR;
+using Scheduler.Model.ViewModels;
 
 namespace Scheduler.Api.Requests.Commands
 {

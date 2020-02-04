@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Scheduler.Api.Requests.Commands;
-using Scheduler.Api.ViewModels;
+using Scheduler.Model.ViewModels;
 using Scheduler.Data.Abstract;
 using Scheduler.Model;
 
