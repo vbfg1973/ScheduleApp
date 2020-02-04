@@ -94,6 +94,23 @@ namespace Scheduler.Api.Controllers
             }
         }
 
+        [HttpDelete("{scheduleId}/attendee/{userId}", Name = "ScheduleDeleteAttendee")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ScheduleDeleteAttendee(int scheduleId, int userId)
+        {
+            try
+            {
+                var scheduleViewModel = await _mediator.Send(new ScheduleDeleteAttendeeCommand(scheduleId, userId));
+                return NoContent();
+            }
+
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
         [HttpGet(Name = "ScheduleGetAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
