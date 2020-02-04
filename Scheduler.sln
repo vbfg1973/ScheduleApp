@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler.Model", "Schedule
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler.Api", "Scheduler.Api\Scheduler.Api.csproj", "{4FF8327D-648F-49E3-88BB-59EEB2B81AE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Web", "Scheduler.Web\Scheduler.Web.csproj", "{13377CC6-DB3D-42ED-80E0-4B09B92B550A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler.Web", "Scheduler.Web\Scheduler.Web.csproj", "{13377CC6-DB3D-42ED-80E0-4B09B92B550A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
