@@ -7,18 +7,18 @@ namespace Scheduler.Data
 {
     public class SchedulerContext : DbContext
     {
+        public SchedulerContext(DbContextOptions options) : base(options)
+        {
+        }
+
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Attendee> Attendees { get; set; }
 
-        public SchedulerContext(DbContextOptions options) : base(options) { }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            }
 
             modelBuilder.Entity<Schedule>()
                 .ToTable("Schedule");
@@ -67,7 +67,6 @@ namespace Scheduler.Data
                 .HasOne(a => a.Schedule)
                 .WithMany(s => s.Attendees)
                 .HasForeignKey(a => a.ScheduleId);
-
         }
     }
 }

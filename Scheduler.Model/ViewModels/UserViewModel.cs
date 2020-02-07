@@ -1,7 +1,7 @@
-﻿using Scheduler.Model.ViewModels.Validations;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Scheduler.Model.ViewModels.Validations;
 
 namespace Scheduler.Model.ViewModels
 {
@@ -17,7 +17,7 @@ namespace Scheduler.Model.ViewModels
         {
             var validator = new UserViewModelValidator();
             var result = validator.Validate(this);
-            return result.Errors.Select(item => new ValidationResult(item.ErrorMessage, new[] { item.PropertyName }));
+            return result.Errors.Select(item => new ValidationResult(item.ErrorMessage, new[] {item.PropertyName}));
         }
     }
 }

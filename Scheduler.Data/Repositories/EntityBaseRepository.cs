@@ -10,17 +10,19 @@ using Scheduler.Model;
 namespace Scheduler.Data.Repositories
 {
     public class EntityBaseRepository<T> : IEntityBaseRepository<T>
-            where T : class, IEntityBase, new()
+        where T : class, IEntityBase, new()
     {
-
-        private SchedulerContext _context;
+        private readonly SchedulerContext _context;
 
         #region Properties
+
         public EntityBaseRepository(SchedulerContext context)
         {
             _context = context;
         }
+
         #endregion
+
         public virtual IEnumerable<T> GetAll()
         {
             return _context.Set<T>().AsEnumerable();
@@ -30,13 +32,11 @@ namespace Scheduler.Data.Repositories
         {
             return _context.Set<T>().Count();
         }
+
         public virtual IEnumerable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties)
         {
             IQueryable<T> query = _context.Set<T>();
-            foreach (var includeProperty in includeProperties)
-            {
-                query = query.Include(includeProperty);
-            }
+            foreach (var includeProperty in includeProperties) query = query.Include(includeProperty);
             return query.AsEnumerable();
         }
 
@@ -53,10 +53,7 @@ namespace Scheduler.Data.Repositories
         public T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
         {
             IQueryable<T> query = _context.Set<T>();
-            foreach (var includeProperty in includeProperties)
-            {
-                query = query.Include(includeProperty);
-            }
+            foreach (var includeProperty in includeProperties) query = query.Include(includeProperty);
 
             return query.Where(predicate).FirstOrDefault();
         }
@@ -68,18 +65,19 @@ namespace Scheduler.Data.Repositories
 
         public virtual void Add(T entity)
         {
-            EntityEntry dbEntityEntry = _context.Entry<T>(entity);
+            EntityEntry dbEntityEntry = _context.Entry(entity);
             _context.Set<T>().Add(entity);
         }
 
         public virtual void Update(T entity)
         {
-            EntityEntry dbEntityEntry = _context.Entry<T>(entity);
+            EntityEntry dbEntityEntry = _context.Entry(entity);
             dbEntityEntry.State = EntityState.Modified;
         }
+
         public virtual void Delete(T entity)
         {
-            EntityEntry dbEntityEntry = _context.Entry<T>(entity);
+            EntityEntry dbEntityEntry = _context.Entry(entity);
             dbEntityEntry.State = EntityState.Deleted;
         }
 
@@ -87,10 +85,7 @@ namespace Scheduler.Data.Repositories
         {
             IEnumerable<T> entities = _context.Set<T>().Where(predicate);
 
-            foreach (var entity in entities)
-            {
-                _context.Entry<T>(entity).State = EntityState.Deleted;
-            }
+            foreach (var entity in entities) _context.Entry(entity).State = EntityState.Deleted;
         }
 
         public virtual void Commit()

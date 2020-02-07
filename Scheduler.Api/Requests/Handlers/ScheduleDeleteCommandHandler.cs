@@ -11,11 +11,12 @@ namespace Scheduler.Api.Requests.Handlers
 {
     public class ScheduleDeleteCommandHandler : IRequestHandler<ScheduleDeleteCommand>
     {
-        private IAttendeeRepository _attendeeRepository;
-        private IScheduleRepository _scheduleRepository;
+        private readonly IAttendeeRepository _attendeeRepository;
         private IMapper _mapper;
+        private readonly IScheduleRepository _scheduleRepository;
 
-        public ScheduleDeleteCommandHandler(IScheduleRepository scheduleRepository, IAttendeeRepository attendeeRepository, IMapper mapper)
+        public ScheduleDeleteCommandHandler(IScheduleRepository scheduleRepository,
+            IAttendeeRepository attendeeRepository, IMapper mapper)
         {
             _attendeeRepository = attendeeRepository;
             _scheduleRepository = scheduleRepository;
@@ -26,10 +27,7 @@ namespace Scheduler.Api.Requests.Handlers
         {
             var schedule = _scheduleRepository.GetSingle(request.Id);
 
-            if (schedule == null)
-            {
-                throw new KeyNotFoundException($"Schedule {request.Id} not found");
-            }
+            if (schedule == null) throw new KeyNotFoundException($"Schedule {request.Id} not found");
 
             try
             {

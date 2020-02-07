@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using Scheduler.Model;
-using Scheduler.Model.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Scheduler.Model;
+using Scheduler.Model.ViewModels;
 
 namespace Scheduler.Api.ViewModels.Mappings
 {
@@ -23,9 +23,9 @@ namespace Scheduler.Api.ViewModels.Mappings
                 .ForMember(vm => vm.Attendees, map =>
                     map.MapFrom(src => new List<UserViewModel>()))
                 .ForMember(vm => vm.Status, map =>
-                    map.MapFrom(s => ((ScheduleStatus)s.Status).ToString()))
+                    map.MapFrom(s => s.Status.ToString()))
                 .ForMember(vm => vm.Type, map =>
-                    map.MapFrom(s => ((ScheduleType)s.Type).ToString()))
+                    map.MapFrom(s => s.Type.ToString()))
                 .ForMember(vm => vm.Statuses, map =>
                     map.MapFrom(src => Enum.GetNames(typeof(ScheduleStatus)).ToArray()))
                 .ForMember(vm => vm.Types, map =>

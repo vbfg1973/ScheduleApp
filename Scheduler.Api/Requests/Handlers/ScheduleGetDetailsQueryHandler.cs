@@ -4,26 +4,28 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Scheduler.Api.Requests.Queries;
-using Scheduler.Model.ViewModels;
 using Scheduler.Data.Abstract;
 using Scheduler.Model;
+using Scheduler.Model.ViewModels;
 
 namespace Scheduler.Api.Requests.Handlers
 {
     public class ScheduleGetDetailsQueryHandler : IRequestHandler<ScheduleGetDetailsQuery, ScheduleDetailsViewModel>
     {
-        private IScheduleRepository _scheduleRepository;
-        private IUserRepository _userRepository;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
+        private readonly IScheduleRepository _scheduleRepository;
+        private readonly IUserRepository _userRepository;
 
-        public ScheduleGetDetailsQueryHandler(IScheduleRepository scheduleRepository, IUserRepository userRepository, IMapper mapper)
+        public ScheduleGetDetailsQueryHandler(IScheduleRepository scheduleRepository, IUserRepository userRepository,
+            IMapper mapper)
         {
             _scheduleRepository = scheduleRepository;
             _userRepository = userRepository;
             _mapper = mapper;
         }
 
-        public Task<ScheduleDetailsViewModel> Handle(ScheduleGetDetailsQuery request, CancellationToken cancellationToken)
+        public Task<ScheduleDetailsViewModel> Handle(ScheduleGetDetailsQuery request,
+            CancellationToken cancellationToken)
         {
             var schedule = _scheduleRepository.GetSingle(s => s.Id == request.Id, s => s.Creator, s => s.Attendees);
 
@@ -41,10 +43,7 @@ namespace Scheduler.Api.Requests.Handlers
                 return Task.FromResult(scheduleDetailsViewModel);
             }
 
-            else
-            {
-                throw new KeyNotFoundException($"Schedule {request.Id} not found");
-            }
+            throw new KeyNotFoundException($"Schedule {request.Id} not found");
         }
     }
 }

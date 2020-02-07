@@ -30,17 +30,14 @@ namespace Scheduler.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> UserCreate(UserViewModel inputUserViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             try
             {
                 var userViewModel = await _mediator.Send(new UserCreateCommand(inputUserViewModel));
                 return new CreatedAtActionResult(nameof(UserGetIndividual),
                     "User",
-                    new { id = userViewModel.Id },
+                    new {id = userViewModel.Id},
                     userViewModel);
             }
 
@@ -56,10 +53,7 @@ namespace Scheduler.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UserUpdate(int id, UserViewModel inputUserViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             try
             {

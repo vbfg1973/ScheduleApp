@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Scheduler.Api.Requests.Commands;
-using Scheduler.Model.ViewModels;
 using Scheduler.Data.Abstract;
 using Scheduler.Model;
+using Scheduler.Model.ViewModels;
 
 namespace Scheduler.Api.Requests.Handlers
 {
     public class UserUpdateCommandHandler : IRequestHandler<UserUpdateCommand, UserViewModel>
     {
-        private IUserRepository _userRepository;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
         public UserUpdateCommandHandler(IUserRepository userRepository, IMapper mapper)
         {

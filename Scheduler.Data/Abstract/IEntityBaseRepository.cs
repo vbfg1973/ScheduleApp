@@ -1,7 +1,7 @@
-﻿using Scheduler.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Scheduler.Model;
 
 namespace Scheduler.Data.Abstract
 {

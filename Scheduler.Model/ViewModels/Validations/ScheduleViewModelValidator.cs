@@ -1,5 +1,5 @@
-﻿using FluentValidation;
-using System;
+﻿using System;
+using FluentValidation;
 
 namespace Scheduler.Model.ViewModels.Validations
 {
@@ -7,10 +7,8 @@ namespace Scheduler.Model.ViewModels.Validations
     {
         public ScheduleViewModelValidator()
         {
-            RuleFor(s => s.TimeEnd).Must((start, end) =>
-            {
-                return DateTimeIsGreater(start.TimeStart, end);
-            }).WithMessage("Schedule's End time must be greater than Start time");
+            RuleFor(s => s.TimeEnd).Must((start, end) => { return DateTimeIsGreater(start.TimeStart, end); })
+                .WithMessage("Schedule's End time must be greater than Start time");
         }
 
         private bool DateTimeIsGreater(DateTime start, DateTime end)

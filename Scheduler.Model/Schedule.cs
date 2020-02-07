@@ -10,7 +10,6 @@ namespace Scheduler.Model
             Attendees = new List<Attendee>();
         }
 
-        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime TimeStart { get; set; }
@@ -21,10 +20,12 @@ namespace Scheduler.Model
         public ScheduleStatus Status { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
-        
+
         public int CreatorId { get; set; }
         public User Creator { get; set; }
-        
+
         public ICollection<Attendee> Attendees { get; set; }
+
+        public int Id { get; set; }
     }
 }

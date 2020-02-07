@@ -11,11 +11,12 @@ namespace Scheduler.Api.Requests.Handlers
 {
     public class UserDeleteCommandHandler : IRequestHandler<UserDeleteCommand>
     {
-        private IUserRepository _userRepository;
-        private IAttendeeRepository _attendeeRepository;
+        private readonly IAttendeeRepository _attendeeRepository;
         private IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
-        public UserDeleteCommandHandler(IUserRepository userRepository, IAttendeeRepository attendeeRepository, IMapper mapper)
+        public UserDeleteCommandHandler(IUserRepository userRepository, IAttendeeRepository attendeeRepository,
+            IMapper mapper)
         {
             _attendeeRepository = attendeeRepository;
             _userRepository = userRepository;
@@ -26,10 +27,7 @@ namespace Scheduler.Api.Requests.Handlers
         {
             var user = _userRepository.GetSingle(request.Id);
 
-            if (user == null)
-            {
-                throw new KeyNotFoundException($"User {request.Id} not found");
-            }
+            if (user == null) throw new KeyNotFoundException($"User {request.Id} not found");
 
             try
             {

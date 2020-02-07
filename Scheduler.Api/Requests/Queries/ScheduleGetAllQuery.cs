@@ -6,6 +6,5 @@ namespace Scheduler.Api.Requests.Queries
 {
     public class ScheduleGetAllQuery : IRequest<IEnumerable<ScheduleViewModel>>
     {
-        
     }
 }

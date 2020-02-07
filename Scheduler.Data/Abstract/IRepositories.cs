@@ -2,9 +2,15 @@
 
 namespace Scheduler.Data.Abstract
 {
-    public interface IScheduleRepository : IEntityBaseRepository<Schedule> { }
+    public interface IScheduleRepository : IEntityBaseRepository<Schedule>
+    {
+    }
 
-    public interface IUserRepository : IEntityBaseRepository<User> { }
+    public interface IUserRepository : IEntityBaseRepository<User>
+    {
+    }
 
-    public interface IAttendeeRepository : IEntityBaseRepository<Attendee> { }
+    public interface IAttendeeRepository : IEntityBaseRepository<Attendee>
+    {
+    }
 }

@@ -5,19 +5,20 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Scheduler.Api.Requests.Commands;
-using Scheduler.Model.ViewModels;
 using Scheduler.Data.Abstract;
 using Scheduler.Model;
+using Scheduler.Model.ViewModels;
 
 namespace Scheduler.Api.Requests.Handlers
 {
     public class ScheduleUpdateCommandHandler : IRequestHandler<ScheduleUpdateCommand, ScheduleViewModel>
     {
-        private IScheduleRepository _scheduleRepository;
-        private IAttendeeRepository _attendeeRepository;
-        private IMapper _mapper;
+        private readonly IAttendeeRepository _attendeeRepository;
+        private readonly IMapper _mapper;
+        private readonly IScheduleRepository _scheduleRepository;
 
-        public ScheduleUpdateCommandHandler(IScheduleRepository scheduleRepository, IAttendeeRepository attendeeRepository, IMapper mapper)
+        public ScheduleUpdateCommandHandler(IScheduleRepository scheduleRepository,
+            IAttendeeRepository attendeeRepository, IMapper mapper)
         {
             _scheduleRepository = scheduleRepository;
             _attendeeRepository = attendeeRepository;
@@ -34,8 +35,8 @@ namespace Scheduler.Api.Requests.Handlers
                 scheduleDb.Title = schedule.Title;
                 scheduleDb.Location = schedule.Location;
                 scheduleDb.Description = schedule.Description;
-                scheduleDb.Status = (ScheduleStatus)Enum.Parse(typeof(ScheduleStatus), schedule.Status);
-                scheduleDb.Type = (ScheduleType)Enum.Parse(typeof(ScheduleType), schedule.Type);
+                scheduleDb.Status = (ScheduleStatus) Enum.Parse(typeof(ScheduleStatus), schedule.Status);
+                scheduleDb.Type = (ScheduleType) Enum.Parse(typeof(ScheduleType), schedule.Type);
                 scheduleDb.TimeStart = schedule.TimeStart;
                 scheduleDb.TimeEnd = schedule.TimeEnd;
 
@@ -43,9 +44,7 @@ namespace Scheduler.Api.Requests.Handlers
                 _attendeeRepository.DeleteWhere(a => a.ScheduleId == request.Id);
 
                 foreach (var userId in schedule.Attendees)
-                {
-                    scheduleDb.Attendees.Add(new Attendee { ScheduleId = request.Id, UserId = userId });
-                }
+                    scheduleDb.Attendees.Add(new Attendee {ScheduleId = request.Id, UserId = userId});
 
                 try
                 {

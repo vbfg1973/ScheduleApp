@@ -4,16 +4,16 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Scheduler.Api.Requests.Commands;
-using Scheduler.Model.ViewModels;
 using Scheduler.Data.Abstract;
 using Scheduler.Model;
+using Scheduler.Model.ViewModels;
 
 namespace Scheduler.Api.Requests.Handlers
 {
     public class UserCreateCommandHandler : IRequestHandler<UserCreateCommand, UserViewModel>
     {
-        private IUserRepository _userRepository;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
         public UserCreateCommandHandler(IUserRepository userRepository, IMapper mapper)
         {
@@ -23,7 +23,7 @@ namespace Scheduler.Api.Requests.Handlers
 
         public Task<UserViewModel> Handle(UserCreateCommand request, CancellationToken cancellationToken)
         {
-            var user = new User()
+            var user = new User
             {
                 Name = request.UserViewModel.Name,
                 Avatar = request.UserViewModel.Avatar,

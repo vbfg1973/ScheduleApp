@@ -1,39 +1,35 @@
 ﻿@page "/schedules"
-@using System.Net
-@using System.Threading.Tasks
-@using Scheduler.Model.ViewModels
-@using System.Net.Http
 @using Newtonsoft.Json
-@using Scheduler.Model
+@using Scheduler.Model.ViewModels
 @inject HttpClient HttpClient
 
 <h1>Schedules</h1>
 
 <table>
     <tbody>
-        @*<tr><td>@_scheduleViewModels.Count</td></tr>*@
-        @foreach (var schedule in _scheduleViewModels)
-        {
-            <tr>
-                <td>
-                    @schedule.Title
-                </td>
-                <td>
-                    @schedule.Creator
-                </td>
-                <td>
-                    @schedule.TimeStart.ToString("dd/MM/yyyy")
-                </td>
-                <td>
-                    @schedule.TimeEnd.ToString("dd/MM/yyyy")
-                </td>
-            </tr>
-        }
+    @*<tr><td>@_scheduleViewModels.Count</td></tr>*@
+    @foreach (var schedule in _scheduleViewModels)
+    {
+        <tr>
+            <td>
+                @schedule.Title
+            </td>
+            <td>
+                @schedule.Creator
+            </td>
+            <td>
+                @schedule.TimeStart.ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @schedule.TimeEnd.ToString("dd/MM/yyyy")
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
 
 @code {
-    private string _baseUrl = "http://localhost:5000/api";
+    private readonly string _baseUrl = "http://localhost:5000/api";
     private List<ScheduleViewModel> _scheduleViewModels = new List<ScheduleViewModel>();
     private string r;
 
@@ -48,4 +44,5 @@
         r = await response.Content.ReadAsStringAsync();
         _scheduleViewModels = JsonConvert.DeserializeObject<List<ScheduleViewModel>>(r);
     }
+
 }

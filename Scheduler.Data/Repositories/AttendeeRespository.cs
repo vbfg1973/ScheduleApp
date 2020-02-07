@@ -7,6 +7,7 @@ namespace Scheduler.Data.Repositories
     {
         public AttendeeRepository(SchedulerContext context)
             : base(context)
-        { }
+        {
+        }
     }
 }

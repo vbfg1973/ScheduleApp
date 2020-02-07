@@ -7,6 +7,7 @@ namespace Scheduler.Data.Repositories
     {
         public UserRepository(SchedulerContext context)
             : base(context)
-        { }
+        {
+        }
     }
 }
